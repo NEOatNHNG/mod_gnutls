@@ -184,6 +184,10 @@ static const command_rec mgs_config_cmds[] = {
     NULL,
     RSRC_CONF,
     "Whether to export PEM encoded certificates to CGIs. Default: Off"),
+    AP_INIT_TAKE1("GnuTLSUseStapling", mgs_set_stapling_enabled,
+    NULL,
+    RSRC_CONF,
+    "Whether to enable OCSP stapling"),
     { NULL },
 };
 

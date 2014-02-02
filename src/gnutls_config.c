@@ -584,6 +584,22 @@ const char *mgs_set_priorities(cmd_parms * parms, void *dummy, const char *arg) 
     return NULL;
 }
 
+const char *mgs_set_stapling_enabled(cmd_parms *parms, void *dummy, const char *arg) {
+    mgs_srvconf_rec *sc =
+            (mgs_srvconf_rec *) ap_get_module_config(parms->server->
+            module_config,
+            &gnutls_module);
+    if (!strcasecmp(arg, "On")) {
+        sc->stapling_enabled = GNUTLS_ENABLED_TRUE;
+    } else if (!strcasecmp(arg, "Off")) {
+        sc->stapling_enabled = GNUTLS_ENABLED_FALSE;
+    } else {
+        return "GnuTLSUseStapling must be set to 'On' or 'Off'";
+    }
+    
+    return NULL;
+}
+
 static mgs_srvconf_rec *_mgs_config_server_create(apr_pool_t * p, char** err) {
     mgs_srvconf_rec *sc = apr_pcalloc(p, sizeof (*sc));
     int ret;
